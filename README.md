@@ -1,6 +1,6 @@
-##Author - Steven Norris
+## Author - Steven Norris
 
-##Date - March 2nd, 2025
+## Date - March 2nd, 2025
 
 # To-Do List Manager (Data Structures & Algorithms)
 
