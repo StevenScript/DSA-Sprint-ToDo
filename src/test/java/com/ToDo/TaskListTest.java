@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TaskedListTest {
+public class TaskListTest {
 
     private TaskList taskList;
 
@@ -18,15 +18,22 @@ public class TaskedListTest {
         Task task1 = new Task("Finish homework");
         Task task2 = new Task("Wash dishes");
 
+        // Add two tasks
         taskList.addTask(task1);
         taskList.addTask(task2);
 
-        // Expecting the list to contain the tasks in the order they were added.
+        // Expecting the list to contain two tasks in the order added
         Assertions.assertEquals(2, taskList.size(),
                 "List size should match the number of added tasks");
-        Assertions.assertEquals("Finish homework", taskList.getHead().getTask().getDescription(),
+
+        // Checking the description of the first task
+        Assertions.assertEquals("Finish homework",
+                taskList.getHead().getTask().getDescription(),
                 "First task should match the first insertion");
-        Assertions.assertEquals("Wash dishes", taskList.getHead().getNext().getTask().getDescription(),
+
+        // Checking the description of the second task
+        Assertions.assertEquals("Wash dishes",
+                taskList.getHead().getNext().getTask().getDescription(),
                 "Second task should match the second insertion");
     }
 
@@ -39,17 +46,20 @@ public class TaskedListTest {
         taskList.markTaskAsCompleted("Call a friend");
 
         // Verify the task's status
-        Task headTask = taskList.getHead().getTask();
-        Assertions.assertTrue(headTask.isCompleted(),
+        TaskList.Node headNode = taskList.getHead();
+        Assertions.assertNotNull(headNode,
+                "Head node should not be null after adding a task");
+        Assertions.assertTrue(headNode.getTask().isCompleted(),
                 "Task should be marked as completed");
     }
 
     @Test
     void testMarkTaskAsCompletedForNonExistentTask() {
         // Attempt to mark a task that doesn't exist
-        taskList.markTaskAsCompleted("This doesn't exist");
-        // Expect no exceptions and no tasks in the list
+        taskList.markTaskAsCompleted("Invalid Task");
+
+        // Expecting no changes (list is empty and no errors thrown)
         Assertions.assertEquals(0, taskList.size(),
-                "List should remain empty if task doesn't exist");
+                "List should remain empty if the task doesn't exist");
     }
 }
